@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { Context as MainContext } from './context/MainContext'
+import { Context as OverlayContext } from './context/OverlayContext'
 
 export default Overlays = ({ state, descriptors, navigation }) => {
-  const { state: { showSheetFlag, showDialogFlag }, hideDialog, hideSheet, showDialog } = useContext(MainContext)
+  const { state: { showSheetFlag, showDialogFlag }, hideDialog, hideSheet, showDialog } = useContext(OverlayContext)
   console.log('   -->>> RENDER OVERLAY')
   return (
     <View style={styles.container}>

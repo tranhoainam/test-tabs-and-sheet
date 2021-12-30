@@ -7,24 +7,32 @@ import {
     View
 } from 'react-native';
 import BottomTabs from './BottomTabs';
-import { Context as MainContext } from './context/MainContext';
+import { Provider as OverlayProvider } from './context/OverlayContext';
+import { Context as OverlayContext } from './context/OverlayContext';
 import Overlays from './Overlays';
 
 const Tab = createBottomTabNavigator();
 
 export default MainApp = () => {
 
-    const { showSheet } = useContext(MainContext)
-
+    function renderOne() {
+        return(
+            <OverlayProvider>
+                <ONE/>
+            </OverlayProvider>
+        )
+    }
     const ONE = () => {
+        const { showSheet } = useContext(OverlayContext)
         console.log('>>>->>> RENDER one')
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'silver' }}>
-                <TouchableOpacity onPress={() => showSheet()} 
-                style={{width: 150, height: 50, alignSelf: 'center', alignItems: 'center', justifyContent: 'center', backgroundColor: 'gray'}}>
-                    <Text style={{color: 'white'}}>Open Sheet</Text>
-                </TouchableOpacity>
-            </View>
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'silver' }}>
+                    <TouchableOpacity onPress={() => showSheet()}
+                        style={{ width: 150, height: 50, alignSelf: 'center', alignItems: 'center', justifyContent: 'center', backgroundColor: 'gray' }}>
+                        <Text style={{ color: 'white' }}>Open Sheet</Text>
+                    </TouchableOpacity>
+                </View>
+
         )
     }
 
@@ -56,7 +64,7 @@ export default MainApp = () => {
             >
                 <Tab.Screen
                     name={"ONE"}
-                    component={ONE}
+                    component={renderOne}
                 />
                 <Tab.Screen
                     name={"TWO"}
@@ -67,7 +75,9 @@ export default MainApp = () => {
                     component={THREE}
                 />
             </Tab.Navigator>
-            <Overlays />
+            <OverlayProvider>
+                <Overlays />
+            </OverlayProvider>
         </>
     )
 }
